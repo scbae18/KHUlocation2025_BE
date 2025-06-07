@@ -3,11 +3,10 @@ const Place = require('../models/Place');
 // 전체 장소 목록 조회
 exports.getPlaces = async (req, res) => {
   try {
-    const places = await Place.find({}, 'name'); // ← 'name' 필드만 가져오기
+    const places = await Place.find({}, 'name coordinates description address photoUrl'); 
     res.json(places);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: '장소 목록을 불러오지 못했습니다.' });
+    res.status(500).json({ message: '장소 불러오기 실패' });
   }
 };
 

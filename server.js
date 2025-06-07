@@ -1,14 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const placeRoutes = require('./routes/place');
+const stampRoutes = require('./routes/stamp');
 const { userConnection, placeConnection } = require('./config/db');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
 
 dotenv.config();
 const app = express();
+app.use(cors());
+
 app.use(express.json());
 
 userConnection.once('open', () => {
@@ -20,6 +24,7 @@ placeConnection.once('open', () => {
 
 app.use('/auth', authRoutes);
 app.use('/places', placeRoutes);
+app.use('/stamps', stampRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
