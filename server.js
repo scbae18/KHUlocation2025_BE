@@ -5,6 +5,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const placeRoutes = require('./routes/place');
 const stampRoutes = require('./routes/stamp');
+const reviewRoutes = require('./routes/reviews');
 const { userConnection, placeConnection } = require('./config/db');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
@@ -25,6 +26,7 @@ placeConnection.once('open', () => {
 app.use('/auth', authRoutes);
 app.use('/places', placeRoutes);
 app.use('/stamps', stampRoutes);
+app.use('/places', reviewRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 

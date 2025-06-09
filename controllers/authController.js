@@ -31,18 +31,24 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: '비밀번호가 틀립니다.' });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    // ✅ nickname 포함해서 JWT 생성
+    const token = jwt.sign(
+      {
+        id: user._id,
+        nickname: user.nickname,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
 
-    res.json({ token, user: { id: user._id, nickname: user.nickname, email: user.email } });
-  } catch (err) {
-    res.status(500).json({ message: '서버 오류' });
-  }
-};
-
-exports.getMe = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        nickname: user.nickname,
+        email: user.email
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: '서버 오류' });
   }
