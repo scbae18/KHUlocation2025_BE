@@ -1,3 +1,5 @@
 /node_modules
 
 .env
+
+scbae_key.pem
