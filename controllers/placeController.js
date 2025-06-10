@@ -1,14 +1,24 @@
 const Place = require('../models/Place');
 
 // 전체 장소 목록 조회
+// 전체 장소 목록 조회
 exports.getPlaces = async (req, res) => {
   try {
-    const places = await Place.find({}, 'name coordinates description address photoUrl'); 
-    res.json(places);
+    const places = await Place.find({}, 'name coordinates description address photoUrl summary category hours phone');
+
+    // coordinates가 있고 lat/lng가 유효한 숫자인 경우만 필터링
+    const validPlaces = places.filter(place =>
+      place.coordinates &&
+      typeof place.coordinates.lat === 'number' &&
+      typeof place.coordinates.lng === 'number'
+    );
+
+    res.json(validPlaces);
   } catch (err) {
     res.status(500).json({ message: '장소 불러오기 실패' });
   }
 };
+
 
 // 특정 장소 상세 조회
 exports.getPlaceById = async (req, res) => {
