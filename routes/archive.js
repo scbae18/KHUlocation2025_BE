@@ -99,4 +99,25 @@ router.get('/all', archiveController.getAllArchives);
  */
 router.delete('/:id', auth, archiveController.deleteArchive);
 
+/**
+ * @swagger
+ * /archives/place/{placeId}:
+ *   get:
+ *     summary: 특정 장소의 아카이빙 사진 조회
+ *     tags: [Archives]
+ *     parameters:
+ *       - in: path
+ *         name: placeId
+ *         required: true
+ *         description: 조회할 장소 ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 해당 장소의 아카이브 목록 반환
+ *       500:
+ *         description: 서버 오류
+ */
+router.get('/place/:placeId', archiveController.getArchivesByPlace);
+
 module.exports = router;

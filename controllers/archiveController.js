@@ -70,3 +70,16 @@ exports.deleteArchive = async (req, res) => {
     res.status(500).json({ message: '아카이브 삭제 실패' });
   }
 };
+
+exports.getArchivesByPlace = async (req, res) => {
+  const { placeId } = req.params;
+
+  try {
+    const archives = await Archive.find({ placeId }).sort({ createdAt: -1 });
+    res.json(archives);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: '장소별 아카이브 조회 실패' });
+  }
+};
+
