@@ -4,7 +4,7 @@ const Place = require('../models/Place');
 // 전체 장소 목록 조회
 exports.getPlaces = async (req, res) => {
   try {
-    const places = await Place.find({}, 'name coordinates detail address summary category hours phone instagram');
+    const places = await Place.find({}, 'name coordinates detail address summary category hours phone instagram description naverUrl');
 
     // coordinates가 있고 lat/lng가 유효한 숫자인 경우만 필터링
     const validPlaces = places.filter(place =>
