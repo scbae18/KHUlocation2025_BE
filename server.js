@@ -13,7 +13,22 @@ const swaggerSpecs = require('./swagger');
 
 dotenv.config();
 const app = express();
-app.use(cors());
+
+const allowedOrigins = [
+  'https://daenggoong.shop',
+  'https://www.daenggoong.shop',
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -31,11 +46,6 @@ app.use('/reviews', reviewRoutes);
 app.use('/archives', archiveRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-
-app.use(cors({
-  origin: 'https://daenggoong.shop', // 정확한 도메인 입력
-  credentials: true
-}));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`서버 실행 중: ${PORT}`));
