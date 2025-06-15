@@ -24,11 +24,11 @@ placeConnection.once('open', () => {
   console.log('✅ 장소 DB 연결 성공');
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/places', placeRoutes);
-app.use('/api/stamps', stampRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/archives', archiveRoutes);
+app.use('auth', authRoutes);
+app.use('places', placeRoutes);
+app.use('stamps', stampRoutes);
+app.use('reviews', reviewRoutes);
+app.use('archives', archiveRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
