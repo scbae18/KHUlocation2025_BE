@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const auth = require('../middleware/authMiddleware');
 const archiveController = require('../controllers/archiveController');
+
+const upload = multer({ dest: 'uploads/' }); // 임시 파일 저장 위치
 
 /**
  * @swagger
@@ -14,7 +17,7 @@ const archiveController = require('../controllers/archiveController');
  * @swagger
  * /archives:
  *   post:
- *     summary: 장소 아카이빙 사진 업로드
+ *     summary: 사진 URL 기반으로 장소 아카이빙 업로드 (구 방식)
  *     tags: [Archives]
  *     security:
  *       - bearerAuth: []
@@ -42,7 +45,43 @@ const archiveController = require('../controllers/archiveController');
  *       500:
  *         description: 서버 오류
  */
-router.post('/', auth, archiveController.uploadArchive);
+router.post('/', auth, archiveController.uploadArchive); // (구 방식 사용 시)
+
+/**
+ * @swagger
+ * /archives/upload:
+ *   post:
+ *     summary: 사진 파일 기반으로 장소 아카이빙 업로드 (권장)
+ *     tags: [Archives]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - placeId
+ *               - photo
+ *             properties:
+ *               placeId:
+ *                 type: string
+ *                 description: 장소 ID
+ *                 example: 60f123abc456def789012345
+ *               photo:
+ *                 type: string
+ *                 format: binary
+ *                 description: 업로드할 사진 파일
+ *     responses:
+ *       201:
+ *         description: 파일 업로드 및 아카이빙 성공
+ *       400:
+ *         description: 필수 정보 누락
+ *       500:
+ *         description: 서버 오류
+ */
+router.post('/upload', auth, upload.single('photo'), archiveController.uploadArchive);
 
 /**
  * @swagger
