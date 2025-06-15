@@ -44,7 +44,7 @@ placeConnection.once('open', () => {
 app.use('/auth', authRoutes);
 app.use('/places', placeRoutes);
 app.use('/stamps', stampRoutes);
-app.use('/reviews', reviewRoutes);
+app.use('/places', reviewRoutes);
 app.use('/archives', archiveRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
