@@ -15,9 +15,11 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
+  'http://localhost:3000',              // ✅ 로컬 개발용
   'https://daenggoong.shop',
   'https://www.daenggoong.shop',
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {
