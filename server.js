@@ -13,7 +13,10 @@ const swaggerSpecs = require('./swagger');
 
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://daenggoong.shop',   // 또는 ['https://daenggoong.shop', 'https://www.daenggoong.shop']
+  credentials: true
+}));
 
 app.use(express.json());
 
