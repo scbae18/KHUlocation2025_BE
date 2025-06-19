@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://api.daenggoong.shop',
+        url: 'https://api.daenggoong.shop',
       },
     ],
     components: {
