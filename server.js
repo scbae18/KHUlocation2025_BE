@@ -18,6 +18,7 @@ const allowedOrigins = [
   'http://localhost:3000',              // ✅ 로컬 개발용
   'https://daenggoong.shop',
   'https://www.daenggoong.shop',
+  'https://api.daenggoong.shop'
 ];
 
 
