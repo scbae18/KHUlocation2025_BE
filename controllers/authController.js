@@ -65,3 +65,20 @@ exports.getMe = async (req, res) => {
     res.status(500).json({ message: '서버 오류' });
   }
 };
+
+exports.getUser = async (req,res) => {
+  try{
+    const userId=req.params.id;
+    console.log(userId)
+    const user = await User.findById(userId).select('nickname stampCount title');
+
+    if(!user){
+      return res.status(404).json({ message: 'User not found'});
+    }
+
+    res.status(200).json(user);
+  }catch(err){
+    console.error("유저 정보 불러오기 실패",err);
+    res.status(500).json({ message:"서버오류"});
+  }
+}

@@ -72,4 +72,52 @@ router.post('/login', authController.login);
  */
 router.get('/me', authMiddleware, authController.getMe);
 
+/**
+ * @swagger
+ * /auth/get/{id}:
+ *   get:
+ *     summary: 사용자 정보 조회
+ *     tags:
+ *       - Auth
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         type: string
+ *         description: 사용자 ObjectId (MongoDB _id)
+ *     responses:
+ *       200:
+ *         description: 사용자 정보 조회 성공
+ *         schema:
+ *           type: object
+ *           properties:
+ *             nickname:
+ *               type: string
+ *               example: 닉네임
+ *             stampCount:
+ *               type: integer
+ *               example: 8
+ *             title:
+ *               type: string
+ *               example: 🗺️댕궁동 탐험가
+ *       404:
+ *         description: 사용자를 찾을 수 없음
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               example: User not found
+ *       500:
+ *         description: 서버 오류
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *               example: 서버 오류로 인해 유저 정보를 불러올 수 없습니다.
+ */
+
+router.get('/get/:id',authController.getUser);
+
 module.exports = router;
