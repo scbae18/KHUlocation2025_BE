@@ -78,7 +78,7 @@ router.get('/me', authMiddleware, authController.getMe);
  *   get:
  *     summary: 사용자 정보 조회
  *     tags:
- *       - User
+ *       - Auth
  *     parameters:
  *       - in: path
  *         name: id

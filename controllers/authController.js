@@ -69,6 +69,7 @@ exports.getMe = async (req, res) => {
 exports.getUser = async (req,res) => {
   try{
     const userId=req.params.id;
+    console.log(userId)
     const user = await User.findById(userId).select('nickname stampCount title');
 
     if(!user){
