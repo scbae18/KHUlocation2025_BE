@@ -29,13 +29,13 @@ exports.uploadArchive = async (req, res) => {
     user.stampCount = (user.stampCount || 0) + 1;
 
     if (user.stampCount >= 20) {
-      user.title = '👑댕궁동 마스터';
+      user.title = '마스터';
     } else if (user.stampCount >= 11) {
-      user.title = '🌟댕궁동 전문가';
+      user.title = '전문가';
     } else if (user.stampCount >= 6) {
-      user.title = '🗺️댕궁동 탐험가';
+      user.title = '탐험가';
     } else {
-      user.title = '🐾댕궁동 입문자';
+      user.title = '입문자';
     }
 
     await user.save();
