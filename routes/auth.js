@@ -74,7 +74,7 @@ router.get('/me', authMiddleware, authController.getMe);
 
 /**
  * @swagger
- * /get/{id}:
+ * /auth/get/{id}:
  *   get:
  *     summary: 사용자 정보 조회
  *     tags:
@@ -118,6 +118,6 @@ router.get('/me', authMiddleware, authController.getMe);
  *               example: 서버 오류로 인해 유저 정보를 불러올 수 없습니다.
  */
 
-router.get('/get/:id',authController.getUser)
+router.get('/get/:id',authController.getUser);
 
 module.exports = router;
