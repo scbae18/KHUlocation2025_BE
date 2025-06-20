@@ -69,11 +69,33 @@ exports.getAllArchives = async (req, res) => {
 
 exports.deleteArchive = async (req, res) => {
   const { id } = req.params;
+  const userId = req.user.id;
+
   try {
-    const archive = await Archive.findOne({ _id: id, userId: req.user.id });
+    const archive = await Archive.findOne({ _id: id, userId });
     if (!archive) return res.status(404).json({ message: '아카이브를 찾을 수 없습니다.' });
 
+    // 아카이브 삭제
     await archive.deleteOne();
+
+    // 사용자 스탬프 감소 및 칭호 변경
+    const user = await User.findById(userId);
+    if (user.stampCount && user.stampCount > 0) {
+      user.stampCount -= 1;
+    }
+
+    if (user.stampCount >= 20) {
+      user.title = '마스터';
+    } else if (user.stampCount >= 11) {
+      user.title = '전문가';
+    } else if (user.stampCount >= 6) {
+      user.title = '탐험가';
+    } else {
+      user.title = '입문자';
+    }
+
+    await user.save();
+
     res.json({ message: '삭제 완료' });
   } catch (err) {
     console.error(err);
