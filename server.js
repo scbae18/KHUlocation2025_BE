@@ -42,6 +42,8 @@ placeConnection.once('open', () => {
   console.log('✅ 장소 DB 연결 성공');
 });
 
+app.use(express.json({limit:"20mb"}));
+app.use(express.urlencoded({ extended:true, limit:"20mb"}));
 app.use('/auth', authRoutes);
 app.use('/places', placeRoutes);
 app.use('/stamps', stampRoutes);
