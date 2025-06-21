@@ -16,6 +16,20 @@ router.get('/', placeController.getPlaces);
 
 /**
  * @swagger
+ * /places/walkcourse:
+ *   get:
+ *     summary: 산책코스 정보 조회
+ *     tags: [Places]
+ *     responses:
+ *       200:
+ *         description: 산책코스 정보 반환
+ *       404:
+ *         description: 산책코스를 찾을 수 없음
+ */
+router.get('/walkcourse', placeController.getWalkCourse);
+
+/**
+ * @swagger
  * /places/{id}:
  *   get:
  *     summary: 특정 장소 상세 조회
